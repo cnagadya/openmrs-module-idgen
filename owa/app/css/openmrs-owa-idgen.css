@@ -154,12 +154,17 @@ select:focus {
     outline: none!important;
 }
 
-a, a:visited, a:hover, a:active{
+a,
+a:visited,
+a:hover,
+a:active {
     color: inherit;
     text-decoration: inherit;
 }
 
+
 /*--------------View Logs Tab ------------*/
+
 .logwrapper .ReactTable {
     margin: 20px;
 }
@@ -177,7 +182,6 @@ a, a:visited, a:hover, a:active{
 .rt-tr.-even {
     background: #fffdf7;
 }
-
 
 .logwrapper .form-control,
 select.form-control {
@@ -245,8 +249,15 @@ select {
 
 .advanced_wrapper,
 .logs_table {
-    width: 100%;
     left: 0;
+}
+
+.advanced_wrapper {
+    width: 100%
+}
+
+.logs_table {
+    margin: 30px
 }
 
 .advanced_wrapper {
@@ -331,6 +342,7 @@ a.button.confirm:hover {
 .advanced_wrapper input[type="submit"] {
     margin-top: 0px
 }
+
 .advanced_wrapper .rdt {
     margin-bottom: 10px;
 }
