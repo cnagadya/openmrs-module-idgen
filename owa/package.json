@@ -9,6 +9,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "jquery": "^3.2.1",
+    "moment": "^2.19.1",
     "popper.js": "^1.12.5",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.0",
@@ -45,7 +46,6 @@
     "karma-webpack": "^2.0.4",
     "on-build-webpack": "^0.1.0",
     "raw-loader": "^0.5.1",
-    "react-table": "^6.5.3",
     "rimraf": "^2.5.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
