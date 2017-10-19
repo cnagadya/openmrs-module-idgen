@@ -80,7 +80,7 @@ export default class LogEntries extends React.Component {
                         <ReactTable
                             data={logEntries}
                             noDataText='No Log Entries Found'
-                            defaultPageSize ={(logEntries.length === 0) ? 5 : (logEntries.length < 20) ? logEntries.length : 20}
+                            pageSize ={(logEntries.length === 0) ? 5 : (logEntries.length < 20) ? logEntries.length : 20}
                             filterAll={true}
                             columns={[
                             {
