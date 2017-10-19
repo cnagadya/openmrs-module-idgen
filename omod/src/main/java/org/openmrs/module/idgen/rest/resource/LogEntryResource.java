@@ -98,7 +98,7 @@ public class LogEntryResource extends DelegatingCrudResource<LogEntry> {
 
 	@PropertyGetter("source")
 	public String getSource(LogEntry logentry) {
-		return logentry.getSource().getUuid();
+		return logentry.getSource().getName();
 	}
 
 	@PropertyGetter("display")
