@@ -24,21 +24,18 @@ export default class LogEntries extends React.Component {
             logEntries: [],
             isHidden: true,
             filteredLogEntries: '',
-            startDate: moment(),
-            searchFilters:{
-                identifier:'', comment:''
+            startDate: '',
+            endDate: '',
+            searchFilters: {
+                identifier: '',
+                comment: ''
             }
         };
-        this.getLogEntries = this
-            .getLogEntries
-            .bind(this);
-        this.advancedSearch = this
-            .advancedSearch
-            .bind(this);
-        this.handleSearch = this
-            .handleSearch
-            .bind(this);
-            this.handleChange = this.handleChange.bind(this);
+        this.getLogEntries = this.getLogEntries.bind(this);
+        this.advancedSearch = this.advancedSearch.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
+        this.handleChangeStart = this.handleChangeStart.bind(this);
+        this.handleChangeEnd = this.handleChangeEnd.bind(this);
     }
     getLogEntries() {
         apiCall(null, 'get', '/idgen/logentry?v=full&identifier=&comment=&source&generatedBy=&dateGenerated=').then((response) => {
@@ -52,32 +49,32 @@ export default class LogEntries extends React.Component {
     }
 
     advancedSearch() {
-        const {identifier, comment}= this.state.searchFilters;
+        const {identifier, comment} = this.state.searchFilters;
         // const comment= this.state.searchFilters.comment;
-        console.log(identifier, this.state.searchFilters);
-        apiCall(null, 'get', `/idgen/logentry?v=full&identifier=${identifier}&comment=${comment}&source&generatedBy=&dat` +
-                'eGenerated=').then((response) => {
+        console.log(identifier, this.state.searchFilters, this.state.startDate);
+        apiCall(null, 'get', `/idgen/logentry?v=full&identifier=${identifier}&comment=${comment}&source&generatedBy=`).then((response) => {
             this.setState({logEntries: response.results});
-                    console.log("Clicked Search Button", response);
+            console.log("Clicked Search Button", response);
         });
-         this.setState({
+        this.setState({
             isHidden: !this.state.isHidden
         })
     }
-    
+
     handleSearch(event) {
         const {name, value} = event.target;
         this.setState({
             searchFilters: Object.assign({}, this.state.searchFilters, {[name]: value})
-        }, ()=>{
+        }, () => {
             console.log("search", this.state.searchFilters)
         });
     }
-    handleChange(date) {
-    this.setState({
-      startDate: date
-    });
-  }
+    handleChangeStart(date) {
+        this.setState({startDate: date});
+    }
+    handleChangeEnd(date) {
+        this.setState({endDate: date});
+    }
     componentDidMount() {
         this.getLogEntries();
     }
@@ -130,7 +127,7 @@ export default class LogEntries extends React.Component {
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl" name="source">Source Name</label>
                                         <Input type="select" id="source">
-                                           {logEntries.map(LogEntry =>  <option>{LogEntry.source}</option>)}
+                                            {this.state.logEntries.map(LogEntry => <option>({LogEntry.source})</option>)}
                                         </Input>
                                     </div>
                                     <div className="col-sm-6 col-md-4">
@@ -139,9 +136,29 @@ export default class LogEntries extends React.Component {
                                     </div>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl" name="gen_range">Generate Between</label>
-                                        <DatePicker selected={this.state.startDate} onChange={this.handleChange} />
+                                        <DatePicker
+                                            className="form-control"
+                                            selected={this.state.startDate}
+                                            selectsStart
+                                            startDate={this.state.startDate}
+                                            endDate={this.state.endDate}
+                                            onChange={this.handleChangeStart}
+                                            placeholderText="From Date"
+                                            showMonthDropdown
+                                            showYearDropdown
+                                            dropdownMode="select"/>
                                         <span>-</span>
-                                        <Input id="date_upper"/>
+                                        <DatePicker
+                                            className="form-control"
+                                            selected={this.state.endDate}
+                                            selectsEnd
+                                            startDate={this.state.startDate}
+                                            endDate={this.state.endDate}
+                                            onChange={this.handleChangeEnd}
+                                            placeholderText="To Date"
+                                            showMonthDropdown
+                                            showYearDropdown
+                                            dropdownMode="select"/>
                                     </div>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl" name="gen_by">Generated By</label>
@@ -157,7 +174,7 @@ export default class LogEntries extends React.Component {
                                     <input
                                         type="button"
                                         value="Search"
-                                        className=" col-sm-6"
+                                        className=" col-sm-6 button confirm"
                                         onClick={this.advancedSearch}/>
                                     <button className="col-sm-6 cancelbtn">Clear All
                                     </button>
@@ -168,12 +185,7 @@ export default class LogEntries extends React.Component {
                         <ReactTable
                             data={logEntries}
                             noDataText='No Log Entries Found'
-                            pageSize
-                            ={(logEntries.length === 0)
-                            ? 5
-                            : (logEntries.length < 20)
-                                ? logEntries.length
-                                : 20}
+                            pageSize = {(logEntries.length === 0) ? 5: (logEntries.length < 20)? logEntries.length: 20}
                             filterAll={true}
                             columns={[
                             {
