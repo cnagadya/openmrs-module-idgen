@@ -21,9 +21,21 @@ export default class LogEntries extends React.Component {
         this.state = {
             logEntries: [],
             isHidden: true,
-            filteredLogEntries: ''
+            filteredLogEntries: '',
+            searchFilters:{
+                identifier:'', comment:''
+            }
+
         }
-        this.getLogEntries = this.getLogEntries.bind(this);
+        this.getLogEntries = this
+            .getLogEntries
+            .bind(this);
+        this.advancedSearch = this
+            .advancedSearch
+            .bind(this);
+        this.handleSearch = this
+            .handleSearch
+            .bind(this);
     }
     getLogEntries() {
         apiCall(null, 'get', '/idgen/logentry?v=full&identifier=&comment=&source&generatedBy=&dateGenerated=').then((response) => {
@@ -35,21 +47,49 @@ export default class LogEntries extends React.Component {
             isHidden: !this.state.isHidden
         })
     }
+
+    advancedSearch() {
+        const {identifier, comment}= this.state.searchFilters;
+        // const comment= this.state.searchFilters.comment;
+        console.log(identifier, this.state.searchFilters);
+        apiCall(null, 'get', `/idgen/logentry?v=full&identifier=${identifier}&comment=${comment}&source&generatedBy=&dat` +
+                'eGenerated=').then((response) => {
+            this.setState({logEntries: response.results});
+                    console.log("Clicked Search Button", response);
+        });
+         this.setState({
+            isHidden: !this.state.isHidden
+        })
+    }
+    
+    handleSearch(event) {
+        const {name, value} = event.target;
+        this.setState({
+            searchFilters: Object.assign({}, this.state.searchFilters, {[name]: value})
+        }, ()=>{
+            console.log("search", this.state.searchFilters)
+        });
+    }
     componentDidMount() {
         this.getLogEntries();
     }
     render() {
         let logEntries = this.state.logEntries
-		if (this.state.filteredLogEntries) {
-			logEntries = logEntries.filter(LogEntry => {
-                let formattedDate =  moment(LogEntry.dateGenerated).format('DD/MM/YYYY')
-				return LogEntry.source.toLowerCase().includes(this.state.filteredLogEntries.toLowerCase()) || 
-                LogEntry.identifier.toLowerCase().includes(this.state.filteredLogEntries.toLowerCase() )|| 
-                LogEntry.comment.toLowerCase().includes(this.state.filteredLogEntries.toLowerCase())|| 
-                formattedDate.includes(this.state.filteredLogEntries)||
-                (LogEntry.generatedBy.username.toLowerCase()).includes(this.state.filteredLogEntries.toLowerCase())
-			})
-		}
+        if (this.state.filteredLogEntries) {
+            logEntries = logEntries.filter(LogEntry => {
+                let formattedDate = moment(LogEntry.dateGenerated).format('DD/MM/YYYY')
+                return LogEntry
+                    .source
+                    .toLowerCase()
+                    .includes(this.state.filteredLogEntries.toLowerCase()) || LogEntry
+                    .identifier
+                    .toLowerCase()
+                    .includes(this.state.filteredLogEntries.toLowerCase()) || LogEntry
+                    .comment
+                    .toLowerCase()
+                    .includes(this.state.filteredLogEntries.toLowerCase()) || formattedDate.includes(this.state.filteredLogEntries) || (LogEntry.generatedBy.username.toLowerCase()).includes(this.state.filteredLogEntries.toLowerCase())
+            })
+        }
         return (
             <div className="logwrapper">
                 <div className="search_label">
@@ -63,7 +103,7 @@ export default class LogEntries extends React.Component {
                             placeholder="Search"
                             className="log_searchbox"
                             defaultValue={this.state.filteredLogEntries}
-							onChange={e => this.setState({filteredLogEntries: e.target.value})}/>
+                            onChange={e => this.setState({filteredLogEntries: e.target.value})}/>
                         <span className="input-group-btn">
                             <button className="btn btn-secondary" type="button">< FaSearch/></button>
                         </span>
@@ -75,12 +115,57 @@ export default class LogEntries extends React.Component {
                         .bind(this)}>More Search Options</button>
                 </div>
                 <div className="logs_table_area">
-                    <div >{!this.state.isHidden && <AdvancedSearch/>}</div>
+                    <div >{!this.state.isHidden && <div className="advanced_wrapper">
+                            <form>
+                                <br/>
+                                <fieldset>
+                                    <div className="col-sm-6 col-md-4">
+                                        <label className="search_lbl" name="source">Source Name</label>
+                                        <Input type="select" id="source">
+                                           {logEntries.map(LogEntry =>  <option>{LogEntry.source}</option>)}
+                                        </Input>
+                                    </div>
+                                    <div className="col-sm-6 col-md-4">
+                                        <label className="search_lbl">Identifier Contains</label>
+                                        <Input id="identifier" name="identifier" onChange={this.handleSearch}/>
+                                    </div>
+                                    <div className="col-sm-6 col-md-4">
+                                        <label className="search_lbl" name="gen_range">Generate Between</label>
+                                        <Input id="date_lower"/>
+                                        <span>-</span>
+                                        <Input id="date_upper"/>
+                                    </div>
+                                    <div className="col-sm-6 col-md-4">
+                                        <label className="search_lbl" name="gen_by">Generated By</label>
+                                        <Input id="gen_by"/>
+                                    </div>
+                                    <div className="col-sm-6 col-md-4">
+                                        <label className="search_lbl">Comment Contains</label>
+                                        <Input id="comment" name="comment" onChange={this.handleSearch}/>
+                                    </div>
+                                    <div className="clear"></div>
+                                </fieldset>
+                                <div className="btn-group" role="group">
+                                    <input
+                                        type="button"
+                                        value="Search"
+                                        className=" col-sm-6"
+                                        onClick={this.advancedSearch}/>
+                                    <button className="col-sm-6 cancelbtn">Clear All
+                                    </button>
+                                </div>
+                            </form>
+                        </div>}</div>
                     <div className="table-responsive logs_table">
                         <ReactTable
                             data={logEntries}
                             noDataText='No Log Entries Found'
-                            pageSize ={(logEntries.length === 0) ? 5 : (logEntries.length < 20) ? logEntries.length : 20}
+                            pageSize
+                            ={(logEntries.length === 0)
+                            ? 5
+                            : (logEntries.length < 20)
+                                ? logEntries.length
+                                : 20}
                             filterAll={true}
                             columns={[
                             {
@@ -122,43 +207,3 @@ export default class LogEntries extends React.Component {
         )
     }
 }
-
-const AdvancedSearch = () => (
-    <div className="advanced_wrapper">
-        <form>
-            <br/>
-            <fieldset>
-                <div className="col-sm-6 col-md-4">
-                    <label className="search_lbl" name="source">Source Name</label>
-                    <Input type="select" id="source">
-                        <option>1</option>
-                    </Input>
-                </div>
-                <div className="col-sm-6 col-md-4">
-                    <label className="search_lbl" name="identifier">Identifier Contains</label>
-                    <Input id="identifier"/>
-                </div>
-                <div className="col-sm-6 col-md-4">
-                    <label className="search_lbl" name="gen_range">Generate Between</label>
-                    <Input id="date_lower"/>
-                    <span>-</span>
-                    <Input id="date_upper"/>
-                </div>
-                <div className="col-sm-6 col-md-4">
-                    <label className="search_lbl" name="gen_by">Generated By</label>
-                    <Input id="gen_by"/>
-                </div>
-                <div className="col-sm-6 col-md-4">
-                    <label className="search_lbl" name="comment">Comment Contains</label>
-                    <Input id="comment"/>
-                </div>
-                <div className="clear"></div>
-            </fieldset>
-            <div className="btn-group" role="group">
-                <input type="submit" value="Search" className=" col-sm-6"/>
-                <button className="col-sm-6 cancelbtn">Clear All
-                </button>
-            </div>
-        </form>
-    </div>
-)
