@@ -10,6 +10,8 @@
 import React from 'react';
 import ReactTable from 'react-table';
 import moment from 'moment';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import 'react-table/react-table.css';
 import {FaSearch} from 'react-icons/lib/fa';
 import {Input} from 'reactstrap';
@@ -22,11 +24,11 @@ export default class LogEntries extends React.Component {
             logEntries: [],
             isHidden: true,
             filteredLogEntries: '',
+            startDate: moment(),
             searchFilters:{
                 identifier:'', comment:''
             }
-
-        }
+        };
         this.getLogEntries = this
             .getLogEntries
             .bind(this);
@@ -36,6 +38,7 @@ export default class LogEntries extends React.Component {
         this.handleSearch = this
             .handleSearch
             .bind(this);
+            this.handleChange = this.handleChange.bind(this);
     }
     getLogEntries() {
         apiCall(null, 'get', '/idgen/logentry?v=full&identifier=&comment=&source&generatedBy=&dateGenerated=').then((response) => {
@@ -70,6 +73,11 @@ export default class LogEntries extends React.Component {
             console.log("search", this.state.searchFilters)
         });
     }
+    handleChange(date) {
+    this.setState({
+      startDate: date
+    });
+  }
     componentDidMount() {
         this.getLogEntries();
     }
@@ -131,7 +139,7 @@ export default class LogEntries extends React.Component {
                                     </div>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl" name="gen_range">Generate Between</label>
-                                        <Input id="date_lower"/>
+                                        <DatePicker selected={this.state.startDate} onChange={this.handleChange} />
                                         <span>-</span>
                                         <Input id="date_upper"/>
                                     </div>
