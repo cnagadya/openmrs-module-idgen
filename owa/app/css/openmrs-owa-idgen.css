@@ -291,6 +291,23 @@ select {
     text-align: center;
 }
 
+#advancedSearchForm .react-datepicker__day--selected,
+#advancedSearchForm .react-datepicker__day--in-selecting-range,
+#advancedSearchForm .react-datepicker__day--in-range,
+#advancedSearchForm .react-datepicker__day--keyboard-selected {
+    background-color: #403e75;
+}
+
+#advancedSearchForm .react-datepicker__day--today {
+    color: #403e75;
+    border: 1px solid #403e75
+}
+
+#advancedSearchForm .react-datepicker__day--today.react-datepicker__day--keyboard-selected,
+#advancedSearchForm .react-datepicker__day--today.react-datepicker__day--selected {
+    color: #fbe5e5
+}
+
 label.search_lbl {
     margin-bottom: 0px
 }
