@@ -72,9 +72,7 @@ export default class LogEntries extends React.Component {
         else{ 
                 const startDate = this.state.startDate.toISOString();
                 apiCall(null, 'get', `/idgen/logentry?v=full&identifier=${identifier}&comment=${comment}&source=${source}&generatedBy=${generatedBy}&fromDate=${startDate}&toDate=${endDate}`).then((response) => {
-                    this.setState({logEntries: response.results}, ()=>{
-                        console.log("entered date", this.state);
-                    });
+                    this.setState({logEntries: response.results});
                 });
         }
         this.setState({
@@ -91,8 +89,6 @@ export default class LogEntries extends React.Component {
     }
     handleChangeStart(date) {
         this.setState({startDate: date
-        }, () => {
-            console.log(this.state.startDate);
         });
     }
     handleChangeEnd(date) {
@@ -119,21 +115,15 @@ export default class LogEntries extends React.Component {
         }
 
     render() {
-        console.log( this.state.endDate === moment(new Date()) )
         let logEntries = this.state.logEntries
         if (this.state.filteredLogEntries) {
             logEntries = logEntries.filter(LogEntry => {
                 let formattedDate = moment(LogEntry.dateGenerated).format('DD/MM/YYYY')
-                return LogEntry
-                    .source
-                    .toLowerCase()
-                    .includes(this.state.filteredLogEntries.toLowerCase()) || LogEntry
-                    .identifier
-                    .toLowerCase()
-                    .includes(this.state.filteredLogEntries.toLowerCase()) || LogEntry
-                    .comment
-                    .toLowerCase()
-                    .includes(this.state.filteredLogEntries.toLowerCase()) || formattedDate.includes(this.state.filteredLogEntries) || (LogEntry.generatedBy.username.toLowerCase()).includes(this.state.filteredLogEntries.toLowerCase())
+                return LogEntry.source.toLowerCase().includes(this.state.filteredLogEntries.toLowerCase())||
+                       LogEntry.identifier.toLowerCase().includes(this.state.filteredLogEntries.toLowerCase()) || 
+                       LogEntry.comment.toLowerCase().includes(this.state.filteredLogEntries.toLowerCase()) || 
+                       formattedDate.includes(this.state.filteredLogEntries) || 
+                       (LogEntry.generatedBy.username.toLowerCase()).includes(this.state.filteredLogEntries.toLowerCase())
             })
         }
 
@@ -166,7 +156,8 @@ export default class LogEntries extends React.Component {
                                 <fieldset>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl">Source Name</label>
-                                        <Input type="select" id="source" value={this.state.searchFilters.source} name="source" onChange={this.handleSearch} >
+                                        <Input type="select" id="source" value={this.state.searchFilters.source} 
+                                        name="source" onChange={this.handleSearch} >
                                             <option value="" disabled selected>--Select Source Name--</option>
                                              {this.state.identifierSources.map(Source => <option>{Source.name}</option>)}
                                         </Input>
@@ -188,6 +179,7 @@ export default class LogEntries extends React.Component {
                                             endDate={this.state.endDate}
                                             onChange={this.handleChangeStart}
                                             placeholderText="From Date"
+                                            maxDate={moment()}
                                             showMonthDropdown
                                             showYearDropdown
                                             dropdownMode="select"/>
@@ -200,6 +192,7 @@ export default class LogEntries extends React.Component {
                                             endDate={this.state.endDate}
                                             onChange={this.handleChangeEnd}
                                             placeholderText="To Date"
+                                            maxDate={moment()}
                                             showMonthDropdown
                                             showYearDropdown
                                             dropdownMode="select"/>
@@ -240,7 +233,7 @@ export default class LogEntries extends React.Component {
                         <ReactTable
                             data={logEntries}
                             noDataText='No Log Entries Found'
-                            pageSize = {(logEntries.length === 0) ? 5: (logEntries.length < 20)? logEntries.length: 20}
+                            pageSize = {(logEntries.length === 0) ? 5 : (logEntries.length < 20) ? logEntries.length : 20}
                             filterAll={true}
                             columns={[
                             {
