@@ -173,6 +173,28 @@ a:active {
     margin: 20px;
 }
 
+.filterLabels {
+    padding: 0px 20px;
+    font-size: 12px
+}
+
+.filterLabels span {
+    margin: 3px;
+}
+
+.filteredBy {
+    border: 1px solid #b9b9b9;
+    background: #e2e2e2;
+    color: #717171;
+    padding: 3px 5px;
+    font-style: italic;
+    display: inline-block;
+    font-size: 10px;
+}
+.filteredBy:hover{
+    color: #545454
+}
+
 .ReactTable .rt-resizable-header.-cursor-pointer.rt-th {
     border-bottom: 1px solid #dddddd;
     background: #f3f3f3;
