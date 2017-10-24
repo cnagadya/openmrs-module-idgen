@@ -37,11 +37,11 @@ export default class LogEntries extends React.Component {
         };
         this.getLogEntries = this.getLogEntries.bind(this);
         this.getIdentifierSources = this.getIdentifierSources.bind(this);
+        this.advancedSearchView = this.advancedSearchView.bind(this);
         this.advancedSearch = this.advancedSearch.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
-        this.handleGeneratedByChange = this.handleGeneratedByChange.bind(this);
         this.resetSearchForm=this.resetSearchForm.bind(this);
     }
     getLogEntries() {
@@ -53,7 +53,6 @@ export default class LogEntries extends React.Component {
          apiCall(null, 'get', '/idgen/identifiersource?v=full').then((response) => {
             this.setState({identifierSources: response.results});
         });
-
     }
     advancedSearchView() {
         this.setState({
@@ -63,40 +62,34 @@ export default class LogEntries extends React.Component {
 
     advancedSearch() {
         const {source, identifier, comment, generatedBy} = this.state.searchFilters;
-        // const comment= this.state.searchFilters.comment;
-        console.log(identifier, this.state.searchFilters, this.state.startDate);
         apiCall(null, 'get', `/idgen/logentry?v=full&identifier=${identifier}&comment=${comment}&source=${source}&generatedBy=${generatedBy}`).then((response) => {
             this.setState({logEntries: response.results});
-            console.log("Clicked Search Button", response);
         });
         this.setState({
             isHidden: !this.state.isHidden
         })
     }
-
     handleSearch(event) {
         const {name, value} = event.target;
         this.setState({
             searchFilters: Object.assign({}, this.state.searchFilters, {[name]: value})
         }, () => {
-            console.log("search", this.state.searchFilters)
+            console.log("search", this.state.searchFilters);
         });
     }
     handleChangeStart(date) {
-        this.setState({startDate: date});
+        this.setState({startDate: date
+        }, () => {
+            console.log(this.state.startDate.toISOString());
+        });
     }
     handleChangeEnd(date) {
         this.setState({endDate: date});
     }
-
-   handleGeneratedByChange(){
-       console.log(this.state.logEntries)
-   }
     componentDidMount() {
         this.getLogEntries();
         this.getIdentifierSources();
     }
-
     resetSearchForm() {
         this.setState({
             searchFilters: {
@@ -106,8 +99,6 @@ export default class LogEntries extends React.Component {
                 generatedBy: ''
             },
             isHidden: !this.state.isHidden
-        }, () => {
-            console.log("search", this.state.searchFilters)
         });
         this.getLogEntries();
         }
@@ -129,6 +120,7 @@ export default class LogEntries extends React.Component {
                     .includes(this.state.filteredLogEntries.toLowerCase()) || formattedDate.includes(this.state.filteredLogEntries) || (LogEntry.generatedBy.username.toLowerCase()).includes(this.state.filteredLogEntries.toLowerCase())
             })
         }
+
         return (
             <div className="logwrapper">
                 <div className="search_label">
@@ -149,23 +141,18 @@ export default class LogEntries extends React.Component {
                     </div>
                     <button
                         className="searchlink"
-                        onClick={this
-                        .advancedSearchView
-                        .bind(this)}>More Search Options</button>
+                        onClick={this.advancedSearchView}>More Search Options</button>
                 </div>
                 <div className="logs_table_area">
                     <div >{!this.state.isHidden && <div className="advanced_wrapper">
                             <form id="advancedSearchForm">
-
                                 <br/>
                                 <fieldset>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl">Source Name</label>
                                         <Input type="select" id="source" value={this.state.searchFilters.source} name="source" onChange={this.handleSearch} >
-
                                             <option value="" disabled selected>--Select Source Name--</option>
                                              {this.state.identifierSources.map(Source => <option>{Source.name}</option>)}
-
                                         </Input>
                                     </div>
                                     <div className="col-sm-6 col-md-4">
@@ -174,7 +161,6 @@ export default class LogEntries extends React.Component {
                                                name="identifier"
                                                value={this.state.searchFilters.identifier}
                                                onChange={this.handleSearch}/>
-
                                     </div>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl" name="gen_range">Generate Between</label>
@@ -204,7 +190,7 @@ export default class LogEntries extends React.Component {
                                     </div>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl" name="gen_by">Generated By</label>
-                                        <Input id="gen_by" name="generatedBy" onChange={this.handleSearch}/>
+                                        <Input value={this.state.searchFilters.generatedBy} name="generatedBy" onChange={this.handleSearch}/>
                                     </div>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl">Comment Contains</label>
@@ -224,7 +210,6 @@ export default class LogEntries extends React.Component {
                             </form>
                         </div>}</div>
                     <div className="table-responsive logs_table">
-
                         { (this.state.searchFilters.source || this.state.searchFilters.identifier || this.state.searchFilters.generatedBy || this.state.searchFilters.comment) &&
                         <div className="filterLabels col col-xs-12">
                             <span><b>Filtered By:</b></span>
