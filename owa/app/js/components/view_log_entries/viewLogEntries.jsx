@@ -63,6 +63,8 @@ export default class LogEntries extends React.Component {
 
     advancedSearch() {
         const {source, identifier, comment, generatedBy} = this.state.searchFilters;
+        // const comment= this.state.searchFilters.comment;
+        console.log(identifier, this.state.searchFilters, this.state.startDate);
         apiCall(null, 'get', `/idgen/logentry?v=full&identifier=${identifier}&comment=${comment}&source=${source}&generatedBy=${generatedBy}`).then((response) => {
             this.setState({logEntries: response.results});
             console.log("Clicked Search Button", response);
@@ -87,8 +89,7 @@ export default class LogEntries extends React.Component {
         this.setState({endDate: date});
     }
 
-   handleGeneratedByChange(event){
-       const {name, value} = event.target;
+   handleGeneratedByChange(){
        console.log(this.state.logEntries)
    }
     componentDidMount() {
@@ -110,6 +111,7 @@ export default class LogEntries extends React.Component {
         });
         this.getLogEntries();
         }
+
     render() {
         let logEntries = this.state.logEntries
         if (this.state.filteredLogEntries) {
@@ -154,11 +156,13 @@ export default class LogEntries extends React.Component {
                 <div className="logs_table_area">
                     <div >{!this.state.isHidden && <div className="advanced_wrapper">
                             <form id="advancedSearchForm">
+
                                 <br/>
                                 <fieldset>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl">Source Name</label>
                                         <Input type="select" id="source" value={this.state.searchFilters.source} name="source" onChange={this.handleSearch} >
+
                                             <option value="" disabled selected>--Select Source Name--</option>
                                              {this.state.identifierSources.map(Source => <option>{Source.name}</option>)}
 
@@ -170,6 +174,7 @@ export default class LogEntries extends React.Component {
                                                name="identifier"
                                                value={this.state.searchFilters.identifier}
                                                onChange={this.handleSearch}/>
+
                                     </div>
                                     <div className="col-sm-6 col-md-4">
                                         <label className="search_lbl" name="gen_range">Generate Between</label>
@@ -214,6 +219,7 @@ export default class LogEntries extends React.Component {
                                         className=" col-sm-6 button confirm"
                                         onClick={this.advancedSearch}/>
                                         <input type="button" className="col-sm-6 cancelbtn" value="Reset" onClick={this.resetSearchForm}/>
+
                                 </div>
                             </form>
                         </div>}</div>
