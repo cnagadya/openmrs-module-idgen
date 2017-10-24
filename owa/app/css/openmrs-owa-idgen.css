@@ -191,7 +191,8 @@ a:active {
     display: inline-block;
     font-size: 10px;
 }
-.filteredBy:hover{
+
+.filteredBy:hover {
     color: #545454
 }
 
