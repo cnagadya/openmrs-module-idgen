@@ -79,7 +79,6 @@ export default class LogEntries extends React.Component {
         this.setState({
             isHidden: !this.state.isHidden
         })
-        console.log("after",this.state);
     }
     handleSearch(event) {
         const {name, value} = event.target;
@@ -97,9 +96,8 @@ export default class LogEntries extends React.Component {
         }
         else{this.setState({
             searchFilters: Object.assign({}, this.state.searchFilters, {[name]: value})
-        }, () => {
-            console.log("search", this.state.searchFilters);
-        });}
+        });
+    }
     }
     handleChangeStart(date) {
         this.setState({startDate: date

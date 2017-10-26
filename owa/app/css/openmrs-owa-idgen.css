@@ -131,9 +131,7 @@ nav {
     border-color: #ddd #ddd #fff;
 }
 
-
 /*General Styles */
-
 button,
 input,
 select,
@@ -162,9 +160,7 @@ a:active {
     text-decoration: inherit;
 }
 
-
 /*--------------View Logs Tab ------------*/
-
 .center {
     text-align: center
 }
@@ -374,10 +370,6 @@ input[type="submit"]:hover,
 a.button.confirm:hover {
     background: #8eb82a;
     border-color: #779b23;
-}
-
-.advanced_wrapper input[type="submit"] {
-    margin-top: 0px
 }
 
 .advanced_wrapper .rdt {
