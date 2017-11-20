@@ -1,0 +1,31 @@
+  $body-bg: #eeeeee;
+  $body-margin:0px auto;
+  $body-color: #363463;
+  $font-family-sans-serif: "OpenSans", Arial, sans-serif;
+
+  $red: #ff3d3d;
+  $green: #88af28;
+
+  $enable-rounded: false;
+  $border-radius:  0;
+
+  $breadcrumb-divider: ">";
+  $breadcrumb-active-color:#363463 ;
+  $breadcrumb-divider-color:#363463;
+  $breadcrumb-bg: transparent;
+  $breadcrumb-color: #555;
+
+  $alert-danger-bg:#ff3d3d;
+  $alert-danger-color:#ffffff;
+
+  $nav-tabs-link-active-color: #363463;
+  $nav-tabs-link-active-bg: #fff;
+  $nav-tabs-link-active-border-color: #363463;
+
+  $form-feedback-invalid-color:#ff3d3d;
+  $table-border-color: #ddd;
+  $table-accent-bg:#fff;
+
+  $headings-color:#009384;
+  @import "~bootstrap/scss/bootstrap.scss";
+

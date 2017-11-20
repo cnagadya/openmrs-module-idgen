@@ -1,0 +1,122 @@
+@import '~bootstrap/scss/functions','~bootstrap/scss/variables';
+@import "~bootstrap/scss/_mixins.scss";
+body {
+    margin: 0px auto
+}
+
+.fa {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.btn-primary {
+    @include button-variant( #f1f1f1, #dddddd);
+    color: #363463;
+    @include hover {
+        color: #363463;
+    }
+}
+
+.btn-danger {
+    @include button-variant( #ff3d3d, #e43737);
+    color: #fff
+}
+
+.btn-success {
+    @include button-variant( #88af28, #709020);
+    color: #fff
+}
+
+.btn-secondary {
+    @include button-variant( #5b57a6, #5b57a6);
+    color: #fff
+}
+
+.alert-danger {
+    @include alert-variant(#ff6666, #ff3d3d, #fff)
+}
+
+.alert-success {
+    @include alert-variant(#a1d030, #81a726, #fff)
+}
+
+.alert-warning {
+    @include alert-variant(#fffdf0, #ffa000, #ffa000)
+}
+
+.nav-tabs {
+    .nav-link {
+        border: $nav-tabs-border-width solid #dddddd;
+        color: #aaa;
+        margin-right: 3px;
+        border-bottom-width: 0px;
+        background-color: #f9f9f9;
+        border-radius: 0px;
+       
+    }
+    .nav-link.active,
+    .nav-item.show .nav-link {
+        border-color: #363463 #ddd $nav-tabs-link-active-bg #ddd;
+        border-width: 3px 1px 0px 1px;
+        font-weight: bold
+    }
+}
+
+.tab-content {
+    border: 1px solid #ddd;
+    border-top-width: 0px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    padding: 10px;
+}
+
+.form-control {
+    @include hover-focus {
+        outline: 2px solid #007fff;
+        box-shadow: none; // outline: none;
+    }
+}
+
+.table-striped {
+    thead th {
+        background-color: #f3f3f3;
+    }
+}
+
+.table-bordered {
+    thead {
+        th,
+        td {
+            border-bottom-width: (1 * $table-border-width);
+        }
+    }
+}
+
+.table-striped {
+    tbody tr:nth-of-type(even) {
+        background-color: #fffdf7;
+    }
+}
+
+.modal-footer {
+    border-top: 0px; 
+    > :not(:first-child) {
+        margin-left: .25rem;
+    }
+    > :not(:last-child) {
+        margin-right: .25rem;
+    }
+}
+
+.modal-header {
+    background: #00463f;
+    color: white;
+    .close {
+        color: #fff;
+        box-shadow: none;
+        opacity: 1
+    }
+}
+.modal-footer{
+    justify-content: space-between
+}

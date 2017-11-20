@@ -7,35 +7,194 @@
  * graphic logo is a trademark of OpenMRS Inc.
  */
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'sweetalert2/dist/sweetalert2.min.css';
-import Header from './common/header';
-import BodyLayout from './bodyLayout';
-import BreadCrumbs from './breadcrumbs/breadcrumbs';
+import 'bootstrap/scss/bootstrap.scss';
+import 'font-awesome/css/font-awesome.min.css';
+import '../../css/custom_variables.scss';
+import '../../css/custom_mixins.scss';
+import Breadcrumbs from './BreadCrumbs';
+import Buttons from './Buttons';
+import Dialog from './Dialog';
+import Table from './Table';
+import Tabs from './Tabs';
+import Forms from './Forms';
+import Notifications from './Notifications';
 
 export default class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      activeTab: '1'
-    };
-      this.toggle = this.toggle.bind(this);
-  }
-
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({activeTab: tab});
-    }
-  }
   render() {
     return (
       <div>
-        <Header />
-        <BreadCrumbs activeTab={this.state.activeTab}/>
-        <div id="body-wrapper">
-          <BodyLayout  activeTab={this.state.activeTab} showTab={this.toggle} />
+        <div className="col-md-9 mx-auto">
+          <div className="alert alert-success">
+            <i className="fa fa-info-circle fa-2x" aria-hidden="true"></i>
+            Please tell us about your installation for the OpenMRS Atlas
+            <a href="">Configure Atlas</a>
+          </div>
         </div>
+        <h4>Logged in as Super User () at Inpatient Ward.</h4>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="col-lg-2 mt-4 col-md-3 col-sm-4 col-xs-6 pull-left">
+          <a className="card btn-primary text-center">
+            <div className="card-body">
+              <i className="fa fa-tachometer fa-2x" aria-hidden="true"></i>
+              <br/>
+              Sample Extension
+            </div>
+          </a>
+        </div>
+        <div className="clearfix">...</div>
       </div>
-    );
+    )
   }
 }
